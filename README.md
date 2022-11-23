@@ -1,0 +1,1 @@
+# wagmi-core-connector
