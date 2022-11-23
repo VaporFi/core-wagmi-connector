@@ -1,8 +1,8 @@
 export {
   CoreWalletConnector,
-  CoreWalletConnectorOptions,
+  type CoreWalletConnectorOptions,
 } from "../src/connector/CoreWallet";
-export { AvalancheProvider, InjectedConnectorOptions } from "../src/types";
+export type { AvalancheProvider, InjectedConnectorOptions } from "../src/types";
 export {
   NoCoreWalletError,
   ChainNotConfiguredError,
