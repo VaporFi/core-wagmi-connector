@@ -1,7 +1,7 @@
 {
   "name": "@vaporfi/wagmi-core-connector",
   "version": "1.0.0",
-  "description": "A core wallet for wagmi client",
+  "description": "An injected connector for core wallet.",
   "main": "src/index.ts",
   "license": "MIT",
   "dependencies": {
