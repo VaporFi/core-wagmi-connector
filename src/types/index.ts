@@ -12,3 +12,10 @@ export type InjectedConnectorOptions = {
   shimChainChangedDisconnect?: boolean;
   shimDisconnect?: boolean;
 };
+
+export type CoreWalletConnectorOptions = Pick<
+  InjectedConnectorOptions,
+  "shimChainChangedDisconnect" | "shimDisconnect"
+> & {
+  UNSTABLE_shimOnConnectSelectAccount?: boolean;
+};

@@ -1,21 +1,14 @@
-import { InjectedConnectorOptions } from "../types";
 import {
   NoCoreWalletError,
   ResourceUnavailableError,
   RpcError,
   UserRejectedRequestError,
 } from "../errors";
-import { AvalancheProvider } from "../types";
+import { AvalancheProvider, CoreWalletConnectorOptions } from "../types";
 import { InjectedConnector } from "wagmi/connectors/injected";
 import { getAddress } from "ethers/lib/utils.js";
 import { Address, Chain } from "wagmi";
 
-export type CoreWalletConnectorOptions = Pick<
-  InjectedConnectorOptions,
-  "shimChainChangedDisconnect" | "shimDisconnect"
-> & {
-  UNSTABLE_shimOnConnectSelectAccount?: boolean;
-};
 export class CoreWalletConnector extends InjectedConnector {
   [x: string]: any;
   readonly id = "coreWallet";
