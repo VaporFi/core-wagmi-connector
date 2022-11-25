@@ -1,6 +1,7 @@
 name: Release package
 
-on: [push]
+on:
+  push
 
 jobs:
   release:
