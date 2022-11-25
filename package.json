@@ -1,12 +1,48 @@
 {
-  "name": "@vaporfi/wagmi-core-connector",
+  "name": "@vaporfi/core-wagmi-connector",
+  "author": "Hitesh Argawal",
   "version": "1.0.0",
   "description": "An injected connector for core wallet.",
-  "main": "src/index.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "keywords": [
+    "wagmi",
+    "ethers",
+    "ethereum"
+  ],
+  "engines": {
+    "node": ">=16"
+  },
   "license": "MIT",
   "dependencies": {
     "ethers": "5.7.2",
     "typescript": "4.9.3",
     "wagmi": "0.8.6"
+  },
+  "devDependencies": {
+    "tsup": "6.5.0"
+  },
+  "peerDependencies": {
+    "ethers": "^5.7.2",
+    "wagmi": "^0.8.6"
+  },
+  "scripts": {
+    "build": "tsup src/index.ts --dts --format cjs,esm --external ethers,wagmi",
+    "prepare": "yarn build"
+  },
+  "prettier": {
+    "printWidth": 80,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "es5"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "tsdx lint"
+    }
   }
 }
