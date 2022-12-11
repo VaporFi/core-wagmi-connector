@@ -12,7 +12,7 @@
     "url": "https://github.com/VaporFi/core-wagmi-connector.git"
   },
   "license": "MIT",
-  "author": "Hitesh Argawal (https://github.com/Thehitesh172)",
+  "author": "Hitesh Agrawal (https://github.com/Thehitesh172)",
   "contributors": [
     {
       "name": "Jose Mejias"
@@ -43,14 +43,14 @@
   "dependencies": {
     "ethers": "5.7.2",
     "typescript": "4.9.4",
-    "wagmi": "0.8.6"
+    "wagmi": "0.8.10"
   },
   "devDependencies": {
     "tsup": "6.5.0"
   },
   "peerDependencies": {
     "ethers": "^5.7.2",
-    "wagmi": "^0.8.6"
+    "wagmi": "^0.8.10"
   },
   "engines": {
     "node": ">=16"
