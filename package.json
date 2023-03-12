@@ -46,7 +46,7 @@
     "wagmi": "0.8.10"
   },
   "devDependencies": {
-    "tsup": "6.5.0"
+    "tsup": "6.6.3"
   },
   "peerDependencies": {
     "ethers": "^5.7.2",
