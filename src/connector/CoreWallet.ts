@@ -3,24 +3,18 @@ import {
   ResourceUnavailableError,
   RpcError,
   UserRejectedRequestError,
-} from "../errors";
-import { AvalancheProvider, CoreWalletConnectorOptions } from "../types";
-import { InjectedConnector } from "wagmi/connectors/injected";
-import { getAddress } from "ethers/lib/utils.js";
-import { Address, Chain } from "wagmi";
+} from '../errors';
+import { CoreWalletConnectorOptions } from '../types';
+import { InjectedConnector } from 'wagmi/connectors/injected';
+import { Address, Chain, WindowProvider } from 'wagmi';
+import { getAddress } from 'viem';
 
 export class CoreWalletConnector extends InjectedConnector {
   [x: string]: any;
-  readonly id = "coreWallet";
-  readonly ready =
-    typeof window != "undefined" &&
-    !!this.findProvider(
-      (window as Window & typeof globalThis & { avalanche?: AvalancheProvider })
-        .avalanche
-    );
+  readonly id = 'CoreWallet';
 
-  public provider: AvalancheProvider;
-  public UNSTABLE_shimOnConnectSelectAccount: CoreWalletConnectorOptions["UNSTABLE_shimOnConnectSelectAccount"];
+  public provider: WindowProvider;
+  public UNSTABLE_shimOnConnectSelectAccount: CoreWalletConnectorOptions['UNSTABLE_shimOnConnectSelectAccount'];
 
   constructor({
     chains,
@@ -30,7 +24,7 @@ export class CoreWalletConnector extends InjectedConnector {
     options?: CoreWalletConnectorOptions;
   } = {}) {
     const options = {
-      name: "CoreWallet",
+      name: 'CoreWallet',
       shimDisconnect: true,
       shimChainChangedDisconnect: true,
       ...options_,
@@ -48,12 +42,12 @@ export class CoreWalletConnector extends InjectedConnector {
       if (!provider) throw new NoCoreWalletError();
 
       if (provider.on && provider.isAvalanche) {
-        provider.on("accountsChanged", this.onAccountsChanged);
-        provider.on("chainChanged", this.onChainChanged);
-        provider.on("disconnect", this.onDisconnect);
+        provider.on('accountsChanged', this.onAccountsChanged);
+        provider.on('chainChanged', this.onChainChanged);
+        provider.on('disconnect', this.onDisconnect);
       }
 
-      this.emit("message", { type: "connecting" });
+      this.emit('message', { type: 'connecting' });
 
       let account: Address | null = null;
       if (
@@ -65,14 +59,14 @@ export class CoreWalletConnector extends InjectedConnector {
         const isConnected = !!account;
         if (isConnected)
           await provider.request({
-            method: "wallet_requestPermissions",
+            method: 'wallet_requestPermissions',
             params: [{ eth_accounts: {} }],
           });
       }
 
       if (!account) {
         const accounts = await provider.request({
-          method: "eth_requestAccounts",
+          method: 'eth_requestAccounts',
         });
         account = getAddress(accounts[0] as string) as Address;
       }
@@ -97,19 +91,20 @@ export class CoreWalletConnector extends InjectedConnector {
   }
 
   async getProvider() {
-    if (typeof window !== "undefined") {
-      //@ts-ignore
-      this.provider = this.findProvider(
-        (
-          window as Window &
-            typeof globalThis & { avalanche?: AvalancheProvider }
-        ).avalanche
+    if (typeof window !== 'undefined') {
+      const provider = this.findProvider(
+        (window as Window & typeof globalThis & { avalanche?: WindowProvider })
+          .avalanche
       );
+
+      if (provider) {
+        this.provider = provider;
+      }
     }
     return this.provider;
   }
 
-  getReady(ethereum?: AvalancheProvider) {
+  getReady(ethereum?: WindowProvider) {
     const isCoreWallet = !!ethereum?.isAvalanche;
     if (!isCoreWallet) return;
     if (ethereum.isBraveWallet && !ethereum._events && !ethereum._state) return;
@@ -117,11 +112,26 @@ export class CoreWalletConnector extends InjectedConnector {
     if (ethereum.isPortal) return;
     if (ethereum.isTokenPocket) return;
     if (ethereum.isTokenary) return;
+    if (ethereum.isBraveWallet && !ethereum._events && !ethereum._state) return;
+    if (ethereum.isApexWallet) return;
+    if (ethereum.isAvalanche) return;
+    if (ethereum.isBitKeep) return;
+    if (ethereum.isBlockWallet) return;
+    if (ethereum.isMathWallet) return;
+    if (ethereum.isOkxWallet || ethereum.isOKExWallet) return;
+    if (ethereum.isOneInchIOSWallet || ethereum.isOneInchAndroidWallet) return;
+    if (ethereum.isOpera) return;
+    if (ethereum.isPortal) return;
+    if (ethereum.isRabby) return;
+    if (ethereum.isDefiant) return;
+    if (ethereum.isTokenPocket) return;
+    if (ethereum.isTokenary) return;
+    if (ethereum.isZerion) return;
     return ethereum;
   }
 
-  findProvider(avalanche?: AvalancheProvider) {
-    if (avalanche?.providers) return avalanche.providers.find(this.getReady);
-    return this.getReady(avalanche);
+  findProvider(ethereum?: WindowProvider) {
+    if (ethereum?.providers) return ethereum.providers.find(this.getReady);
+    return this.getReady(ethereum);
   }
 }

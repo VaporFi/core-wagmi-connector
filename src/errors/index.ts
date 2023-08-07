@@ -1,8 +1,8 @@
-import { Connector, Chain } from "wagmi";
+import { Connector, Chain } from 'wagmi';
 
 export class NoCoreWalletError extends Error {
   public constructor() {
-    super("Core wallet is not installed");
+    super('Core wallet is not installed');
     this.name = NoCoreWalletError.name;
     Object.setPrototypeOf(this, NoCoreWalletError.prototype);
   }
@@ -27,7 +27,7 @@ export class RpcError<T = undefined> extends Error {
     data?: T
   ) {
     if (!Number.isInteger(code)) throw new Error('"code" must be an integer.');
-    if (!message || typeof message !== "string")
+    if (!message || typeof message !== 'string')
       throw new Error('"message" must be a nonempty string.');
 
     super(message);
@@ -69,24 +69,24 @@ export class ProviderRpcError<T = undefined> extends RpcError<T> {
 }
 
 export class AddChainError extends Error {
-  name = "AddChainError";
-  message = "Error adding chain";
+  name = 'AddChainError';
+  message = 'Error adding chain';
 }
 
 export class ChainDoesNotSupportMulticallError extends Error {
-  name = "ChainDoesNotSupportMulticall";
+  name = 'ChainDoesNotSupportMulticall';
 
   constructor({ blockNumber, chain }: { blockNumber?: number; chain: Chain }) {
     super(
       `Chain "${chain.name}" does not support multicall${
-        blockNumber ? ` on block ${blockNumber}` : ""
+        blockNumber ? ` on block ${blockNumber}` : ''
       }.`
     );
   }
 }
 
 export class ChainMismatchError extends Error {
-  name = "ChainMismatchError";
+  name = 'ChainMismatchError';
 
   constructor({
     activeChain,
@@ -102,7 +102,7 @@ export class ChainMismatchError extends Error {
 }
 
 export class ChainNotConfiguredError extends Error {
-  name = "ChainNotConfigured";
+  name = 'ChainNotConfigured';
 
   constructor({
     chainId,
@@ -116,17 +116,17 @@ export class ChainNotConfiguredError extends Error {
 }
 
 export class ConnectorAlreadyConnectedError extends Error {
-  name = "ConnectorAlreadyConnectedError";
-  message = "Connector already connected";
+  name = 'ConnectorAlreadyConnectedError';
+  message = 'Connector already connected';
 }
 
 export class ConnectorNotFoundError extends Error {
-  name = "ConnectorNotFoundError";
-  message = "Connector not found";
+  name = 'ConnectorNotFoundError';
+  message = 'Connector not found';
 }
 
 export class ContractMethodNoResultError extends Error {
-  name = "ContractMethodNoResultError";
+  name = 'ContractMethodNoResultError';
 
   constructor({
     address,
@@ -141,16 +141,16 @@ export class ContractMethodNoResultError extends Error {
   }) {
     super(
       [
-        "Contract read returned an empty response. This could be due to any of the following:",
+        'Contract read returned an empty response. This could be due to any of the following:',
         `- The contract does not have the function "${functionName}",`,
-        "- The parameters passed to the contract function may be invalid, or",
-        "- The address is not a contract.",
-        "",
+        '- The parameters passed to the contract function may be invalid, or',
+        '- The address is not a contract.',
+        '',
         `Config:`,
         JSON.stringify(
           {
             address,
-            abi: "...",
+            abi: '...',
             functionName,
             chainId,
             args,
@@ -158,13 +158,13 @@ export class ContractMethodNoResultError extends Error {
           null,
           2
         ),
-      ].join("\n")
+      ].join('\n')
     );
   }
 }
 
 export class ContractMethodRevertedError extends Error {
-  name = "ContractMethodRevertedError";
+  name = 'ContractMethodRevertedError';
 
   constructor({
     address,
@@ -181,13 +181,13 @@ export class ContractMethodRevertedError extends Error {
   }) {
     super(
       [
-        "Contract method reverted with an error.",
-        "",
+        'Contract method reverted with an error.',
+        '',
         `Config:`,
         JSON.stringify(
           {
             address,
-            abi: "...",
+            abi: '...',
             functionName,
             chainId,
             args,
@@ -195,15 +195,15 @@ export class ContractMethodRevertedError extends Error {
           null,
           2
         ),
-        "",
+        '',
         `Details: ${errorMessage}`,
-      ].join("\n")
+      ].join('\n')
     );
   }
 }
 
 export class ContractResultDecodeError extends Error {
-  name = "ContractResultDecodeError";
+  name = 'ContractResultDecodeError';
 
   constructor({
     address,
@@ -220,13 +220,13 @@ export class ContractResultDecodeError extends Error {
   }) {
     super(
       [
-        "Failed to decode contract function result.",
-        "",
+        'Failed to decode contract function result.',
+        '',
         `Config:`,
         JSON.stringify(
           {
             address,
-            abi: "...",
+            abi: '...',
             functionName,
             chainId,
             args,
@@ -234,51 +234,51 @@ export class ContractResultDecodeError extends Error {
           null,
           2
         ),
-        "",
+        '',
         `Details: ${errorMessage}`,
-      ].join("\n")
+      ].join('\n')
     );
   }
 }
 
 export class ProviderChainsNotFound extends Error {
-  name = "ProviderChainsNotFound";
+  name = 'ProviderChainsNotFound';
   message = [
-    "No chains were found on the wagmi provider. Some functions that require a chain may not work.",
-    "",
-    "It is recommended to add a list of chains to the provider in `createClient`.",
-    "",
-    "Example:",
-    "",
-    "```",
+    'No chains were found on the wagmi provider. Some functions that require a chain may not work.',
+    '',
+    'It is recommended to add a list of chains to the provider in `createClient`.',
+    '',
+    'Example:',
+    '',
+    '```',
     "import { getDefaultProvider } from 'ethers'",
     "import { chain, createClient } from 'wagmi'",
-    "",
-    "createClient({",
-    "  provider: Object.assign(getDefaultProvider(), { chains: [chain.mainnet] })",
-    "})",
-    "```",
-  ].join("\n");
+    '',
+    'createClient({',
+    '  provider: Object.assign(getDefaultProvider(), { chains: [chain.mainnet] })',
+    '})',
+    '```',
+  ].join('\n');
 }
 
 export class ResourceUnavailableError extends RpcError {
-  name = "ResourceUnavailable";
+  name = 'ResourceUnavailable';
 
   constructor(error: unknown) {
-    super(-32002, "Resource unavailable", error);
+    super(-32002, 'Resource unavailable', error);
   }
 }
 
 export class SwitchChainError extends ProviderRpcError {
-  name = "SwitchChainError";
+  name = 'SwitchChainError';
 
   constructor(error: unknown) {
-    super(4902, "Error switching chain", error);
+    super(4902, 'Error switching chain', error);
   }
 }
 
 export class SwitchChainNotSupportedError extends Error {
-  name = "SwitchChainNotSupportedError";
+  name = 'SwitchChainNotSupportedError';
 
   constructor({ connector }: { connector: Connector }) {
     super(`"${connector.name}" does not support programmatic chain switching.`);
@@ -286,9 +286,9 @@ export class SwitchChainNotSupportedError extends Error {
 }
 
 export class UserRejectedRequestError extends ProviderRpcError {
-  name = "UserRejectedRequestError";
+  name = 'UserRejectedRequestError';
 
   constructor(error: unknown) {
-    super(4001, "User rejected request", error);
+    super(4001, 'User rejected request', error);
   }
 }
