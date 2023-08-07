@@ -1,12 +1,3 @@
-import { Ethereum } from "@wagmi/core";
-
-export type AvalancheProvider = Ethereum & {
-  isMetamask?: boolean;
-  isAvalanche?: boolean;
-  isConnected?: () => boolean;
-  providers?: any[];
-};
-
 export type InjectedConnectorOptions = {
   name?: string | ((detectedName: string | string[]) => string);
   shimChainChangedDisconnect?: boolean;
@@ -15,7 +6,7 @@ export type InjectedConnectorOptions = {
 
 export type CoreWalletConnectorOptions = Pick<
   InjectedConnectorOptions,
-  "shimChainChangedDisconnect" | "shimDisconnect"
+  'shimDisconnect'
 > & {
   UNSTABLE_shimOnConnectSelectAccount?: boolean;
 };

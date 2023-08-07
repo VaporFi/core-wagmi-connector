@@ -9,24 +9,28 @@
 You can use this connector as any other wagmi connector, import it and use it in your client setup
 
 ```js
-import { chain, configureChains, createClient } from 'wagmi';
+import { configureChains, createConfig } from 'wagmi';
+import { avalanche, avalancheFuji } from '@wagmi/core/chains';
 import { InjectedConnector } from 'wagmi/connectors/injected';
 import { publicProvider } from 'wagmi/providers/public';
 import { CoreWalletConnector } from '@vaporfi/core-wagmi-connector';
 
-const { chains, provider } = configureChains(
-  [chain.mainnet, chain.polygon],
+const { chains, publicClient } = configureChains(
+  [avalanche, avalancheFuji],
   [publicProvider()]
 );
 
-const wagmiClient = createClient({
+const wagmiConfig = createConfig({
   autoConnect: true,
-  connectors: [
-    new CoreWalletConnector({ chains, options: {} }),
-    new InjectedConnector({ chains }),
-  ],
-  provider,
+  connectors: [new CoreWalletConnector({ chains, options: {} })],
+  publicClient,
 });
+
+// wrap your app with WagmiConfig
+import { WagmiConfig } from 'wagmi';
+const MyApp = ({ children, ...props }) => {
+  return <WagmiConfig config={wagmiConfig}>{children}</WagmiConfig>;
+};
 ```
 
 ## Documentation
