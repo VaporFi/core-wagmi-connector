@@ -3,11 +3,4 @@ export type {
   InjectedConnectorOptions,
   CoreWalletConnectorOptions,
 } from '../src/types';
-export {
-  NoCoreWalletError,
-  ChainNotConfiguredError,
-  ChainDoesNotSupportMulticallError,
-  SwitchChainError,
-  ChainMismatchError,
-  ConnectorAlreadyConnectedError,
-} from '../src/errors';
+export { NoCoreWalletError } from '../src/errors';
