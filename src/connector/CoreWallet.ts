@@ -109,10 +109,6 @@ export class CoreWalletConnector extends InjectedConnector {
     if (!isCoreWallet) return;
     if (ethereum.isBraveWallet && !ethereum._events && !ethereum._state) return;
     if (ethereum.isKuCoinWallet) return;
-    if (ethereum.isPortal) return;
-    if (ethereum.isTokenPocket) return;
-    if (ethereum.isTokenary) return;
-    if (ethereum.isBraveWallet && !ethereum._events && !ethereum._state) return;
     if (ethereum.isApexWallet) return;
     if (ethereum.isBitKeep) return;
     if (ethereum.isBlockWallet) return;
