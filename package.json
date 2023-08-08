@@ -29,7 +29,7 @@
   ],
   "scripts": {
     "build": "tsup src/index.ts --clean --dts --format cjs,esm --external viem,wagmi",
-    "prepare": "yarn build"
+    "prepare": "npm run build"
   },
   "husky": {
     "hooks": {
@@ -56,6 +56,6 @@
     "wagmi": "1.3.9"
   },
   "engines": {
-    "node": ">=16"
+    "node": ">=18"
   }
 }
